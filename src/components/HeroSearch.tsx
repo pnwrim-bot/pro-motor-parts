@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search, Car, Cog, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,8 +7,27 @@ import { Input } from "@/components/ui/input";
 type SearchTab = "vrm" | "engine" | "part";
 
 const HeroSearch = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<SearchTab>("vrm");
   const [searchValue, setSearchValue] = useState("");
+
+  const handleSearch = () => {
+    if (!searchValue.trim()) return;
+    
+    if (activeTab === "vrm") {
+      navigate(`/vehicle?vrm=${encodeURIComponent(searchValue.trim())}`);
+    } else if (activeTab === "engine") {
+      navigate(`/search?engine=${encodeURIComponent(searchValue.trim())}`);
+    } else {
+      navigate(`/search?part=${encodeURIComponent(searchValue.trim())}`);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   const tabs = [
     { key: "vrm" as SearchTab, label: "Vehicle Reg", icon: Car, placeholder: "Enter reg e.g. AB12 CDE" },
@@ -70,10 +90,14 @@ const HeroSearch = () => {
                     placeholder={tabs.find(t => t.key === activeTab)?.placeholder}
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     className="pl-12 h-14 text-lg border-2 border-border focus:border-primary"
                   />
                 </div>
-                <Button className="h-14 px-8 btn-accent text-base font-bold">
+                <Button 
+                  onClick={handleSearch}
+                  className="h-14 px-8 btn-accent text-base font-bold"
+                >
                   Search Parts
                 </Button>
               </div>

@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import TradeLogin from "./pages/TradeLogin";
 import TradeDashboard from "./pages/TradeDashboard";
+import VrmResults from "./pages/VrmResults";
 import ProtectedTradeRoute from "./components/ProtectedTradeRoute";
 import { TradeAuthProvider } from "./contexts/TradeAuthContext";
 
@@ -21,6 +22,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/vehicle" element={<VrmResults />} />
             <Route path="/trade/login" element={<TradeLogin />} />
             <Route
               path="/trade/dashboard"
