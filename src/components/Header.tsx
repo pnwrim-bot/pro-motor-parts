@@ -28,7 +28,7 @@ const Header = () => {
             <span className="hidden md:inline text-chrome">Mon-Fri 8am-6pm | Sat 9am-4pm</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="#" className="hover:text-primary transition-colors">Trade Login</a>
+            <a href="/trade/login" className="hover:text-primary transition-colors">Trade Login</a>
             <span className="text-steel">|</span>
             <a href="#" className="hover:text-primary transition-colors">Track Order</a>
           </div>
@@ -138,7 +138,9 @@ const Header = () => {
               </a>
             ))}
             <div className="pt-4 border-t border-border">
-              <Button className="w-full btn-accent">Trade Login</Button>
+              <a href="/trade/login">
+                <Button className="w-full btn-accent">Trade Login</Button>
+              </a>
             </div>
           </nav>
         </div>
