@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Menu, X, ShoppingCart, User, Phone, ChevronDown } from "lucide-react";
+import { Menu, X, User, Phone, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MegaMenu from "./MegaMenu";
+import CartButton from "./cart/CartButton";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -71,12 +72,7 @@ const Header = () => {
             <Button variant="ghost" size="icon" className="hidden sm:flex">
               <User className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-5 w-5 bg-accent text-accent-foreground text-xs font-bold rounded-full flex items-center justify-center">
-                3
-              </span>
-            </Button>
+            <CartButton />
             <Button 
               variant="ghost" 
               size="icon" 
