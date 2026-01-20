@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import TradeLogin from "./pages/TradeLogin";
 import TradeDashboard from "./pages/TradeDashboard";
 import VrmResults from "./pages/VrmResults";
+import ProductDetail from "./pages/ProductDetail";
 import ProtectedTradeRoute from "./components/ProtectedTradeRoute";
 import { TradeAuthProvider } from "./contexts/TradeAuthContext";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/vehicle" element={<VrmResults />} />
+            <Route path="/product/:partNumber" element={<ProductDetail />} />
             <Route path="/trade/login" element={<TradeLogin />} />
             <Route
               path="/trade/dashboard"
