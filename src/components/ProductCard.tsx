@@ -1,5 +1,7 @@
 import { ShoppingCart, Check, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
   name: string;
@@ -26,6 +28,25 @@ const ProductCard = ({
   image,
   category,
 }: ProductCardProps) => {
+  const { addItem } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = () => {
+    addItem({
+      id: partNumber,
+      partNumber,
+      name,
+      brand,
+      price,
+      image,
+      inStock
+    });
+    toast({
+      title: "Added to cart",
+      description: `${name} has been added to your cart.`,
+    });
+  };
+
   return (
     <div className="card-industrial group transition-all duration-300 hover:scale-[1.02]">
       {/* Image Section */}
@@ -118,7 +139,10 @@ const ProductCard = ({
         </div>
 
         {/* Add to Cart */}
-        <Button className="w-full btn-primary h-11 font-semibold">
+        <Button 
+          className="w-full btn-primary h-11 font-semibold"
+          onClick={handleAddToCart}
+        >
           <ShoppingCart className="w-4 h-4 mr-2" />
           Add to Cart
         </Button>

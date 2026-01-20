@@ -8,6 +8,8 @@ import TechnicalSpecsTable from "@/components/pdp/TechnicalSpecsTable";
 import ExplodedDiagram from "@/components/pdp/ExplodedDiagram";
 import FitmentVerification from "@/components/pdp/FitmentVerification";
 import KitBuilderSidebar from "@/components/pdp/KitBuilderSidebar";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock product data
 const mockProducts: Record<string, {
@@ -145,13 +147,56 @@ const mockProducts: Record<string, {
 const ProductDetail = () => {
   const { partNumber } = useParams<{ partNumber: string }>();
   const product = mockProducts[partNumber || ""] || mockProducts["BRK-VW-001"];
+  const { addItem } = useCart();
+  const { toast } = useToast();
 
   const handleAddToCart = () => {
-    console.log("Added to cart:", product.partNumber);
+    addItem({
+      id: product.partNumber,
+      partNumber: product.partNumber,
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      image: product.images[0],
+      inStock: product.inStock
+    });
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart.`,
+    });
   };
 
   const handleKitAddToCart = (items: string[]) => {
-    console.log("Added kit to cart:", items);
+    // Add main product
+    addItem({
+      id: product.partNumber,
+      partNumber: product.partNumber,
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      image: product.images[0],
+      inStock: product.inStock
+    });
+    
+    // Add selected kit items
+    items.forEach(itemId => {
+      const kitItem = product.kitItems.find(k => k.id === itemId);
+      if (kitItem) {
+        addItem({
+          id: kitItem.partNumber,
+          partNumber: kitItem.partNumber,
+          name: kitItem.name,
+          brand: product.brand,
+          price: kitItem.price,
+          inStock: true
+        });
+      }
+    });
+    
+    toast({
+      title: "Kit added to cart",
+      description: `${items.length + 1} items have been added to your cart.`,
+    });
   };
 
   return (
